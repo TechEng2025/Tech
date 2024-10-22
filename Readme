@@ -1,1 +1,56 @@
-test readme
+test A memory leak is a situation where a computer program incorrectly manages memory allocations, leading to memory waste and potential performance issues.
+
+*Memory Leak in Java*
+
+In Java, memory leaks occur when objects are no longer needed but still retain memory, preventing the garbage collector from reclaiming it.
+
+*Types of Memory Leaks in Java*
+
+1. Static Variables
+2. Unclosed Resources
+3. Circular References
+4. Inner Class References
+5. Hash Map Issues
+6. Database Connection Leaks
+7. File Handle Leaks
+8. Thread Locals
+
+*Causes of Memory Leaks in Java*
+
+1. Poor coding practices
+2. Incorrect usage of static variables
+3. Unclosed database connections or file handles
+4. Circular object references
+5. Incorrect usage of thread locals
+
+*Symptoms of Memory Leaks in Java*
+
+1. Increasing memory usage
+2. Slow application performance
+3. OutOfMemoryError exceptions
+4. Frequent garbage collection
+
+*Prevention and Detection*
+
+1. Use profiling tools (e.g., VisualVM, Eclipse Memory Analyzer)
+2. Monitor memory usage and garbage collection
+3. Implement weak references
+4. Avoid static variables
+5. Close resources promptly
+6. Use Java 14+ records for efficient memory usage
+
+*Tools for Detecting Memory Leaks in Java*
+
+1. VisualVM
+2. Eclipse Memory Analyzer Tool (MAT)
+3. Java Mission Control (JMC)
+4. YourKit Profiler
+5. JProfiler
+
+Would you like to explore:
+
+1. Java Garbage Collection?
+2. Java Memory Management?
+3. Java Performance Optimization?
+4. Java Troubleshooting?
+5. Other related topics?
