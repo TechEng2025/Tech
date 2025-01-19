@@ -1,1 +1,81 @@
-test readme
+
+import React from 'react';
+import { render, screen, fireEvent } from '@testing-library/react';
+import Dashboard from './Dashboard';
+
+// Mock child components
+jest.mock('./Modules/ReportGenerator', () => () => <div data-testid="ReportGenerator">Report Generator</div>);
+jest.mock('./Modules/ActivateProperties', () => () => <div data-testid="ActivateProperties">Activate Properties</div>);
+jest.mock('./Modules/Reservations', () => () => <div data-testid="Reservations">Reservations</div>);
+jest.mock('./Layout/Header', () => () => <div data-testid="Header">Header</div>);
+jest.mock('./Layout/Footer', () => () => <div data-testid="Footer">Footer</div>);
+
+describe('Dashboard Component', () => {
+  beforeEach(() => {
+    // Ensure a fresh render for every test
+    render(<Dashboard />);
+  });
+
+  it('renders the default dashboard view', () => {
+    // Verify that the default view renders correctly
+    expect(screen.getByText(/Select Homes & Retreats Utility Tool/i)).toBeInTheDocument();
+    expect(screen.getByText(/See below features/i)).toBeInTheDocument();
+  });
+
+  it('renders the ReportGenerator component when the card is clicked', () => {
+    const reportCard = screen.getByText(/Report Generator/i); // Replace with the correct card label
+    fireEvent.click(reportCard);
+    expect(screen.getByTestId('ReportGenerator')).toBeInTheDocument();
+  });
+
+  it('renders the ActivateProperties component when the card is clicked', () => {
+    const propertiesCard = screen.getByText(/Activate Properties/i); // Replace with the correct card label
+    fireEvent.click(propertiesCard);
+    expect(screen.getByTestId('ActivateProperties')).toBeInTheDocument();
+  });
+
+  it('renders the Reservations component when the card is clicked', () => {
+    const reservationsCard = screen.getByText(/Reservations/i); // Replace with the correct card label
+    fireEvent.click(reservationsCard);
+    expect(screen.getByTestId('Reservations')).toBeInTheDocument();
+  });
+
+  it('navigates back to the default dashboard view from ReportGenerator', () => {
+    const reportCard = screen.getByText(/Report Generator/i); // Replace with the correct card label
+    fireEvent.click(reportCard);
+    expect(screen.getByTestId('ReportGenerator')).toBeInTheDocument();
+
+    const backButton = screen.getByText(/Back/i); // Replace with the correct back button text
+    fireEvent.click(backButton);
+    expect(screen.getByText(/Select Homes & Retreats Utility Tool/i)).toBeInTheDocument();
+  });
+
+  it('navigates back to the default dashboard view from ActivateProperties', () => {
+    const propertiesCard = screen.getByText(/Activate Properties/i); // Replace with the correct card label
+    fireEvent.click(propertiesCard);
+    expect(screen.getByTestId('ActivateProperties')).toBeInTheDocument();
+
+    const backButton = screen.getByText(/Back/i); // Replace with the correct back button text
+    fireEvent.click(backButton);
+    expect(screen.getByText(/Select Homes & Retreats Utility Tool/i)).toBeInTheDocument();
+  });
+
+  it('renders a fallback component or the default dashboard view for an invalid active component', () => {
+    // Directly set an invalid active component ID if possible
+    render(
+      <Dashboard activeComponent="invalid" /> // Replace with logic for setting invalid state
+    );
+
+    expect(screen.getByText(/Select Homes & Retreats Utility Tool/i)).toBeInTheDocument();
+  });
+
+  it('handles null or undefined activeComponent gracefully', () => {
+    render(<Dashboard activeComponent={null} />);
+    expect(screen.getByText(/Select Homes & Retreats Utility Tool/i)).toBeInTheDocument();
+  });
+
+  it('renders Header and Footer components', () => {
+    expect(screen.getByTestId('Header')).toBeInTheDocument();
+    expect(screen.getByTestId('Footer')).toBeInTheDocument();
+  });
+});
