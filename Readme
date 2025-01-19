@@ -79,3 +79,53 @@ describe('Dashboard Component', () => {
     expect(screen.getByTestId('Footer')).toBeInTheDocument();
   });
 });
+
+
+import React from 'react';
+import { render, screen, fireEvent } from '@testing-library/react';
+import Dashboard from './Dashboard';
+
+// Mock child components
+jest.mock('./Modules/ReportGenerator', () => () => <div data-testid="ReportGenerator">Report Generator</div>);
+jest.mock('./Modules/ActivateProperties', () => () => <div data-testid="ActivateProperties">Activate Properties</div>);
+jest.mock('./Modules/Reservations', () => () => <div data-testid="Reservations">Reservations</div>);
+jest.mock('./Layout/Header', () => () => <div data-testid="Header">Header</div>);
+jest.mock('./Layout/Footer', () => () => <div data-testid="Footer">Footer</div>);
+
+describe('Dashboard Component', () => {
+  it('renders the default dashboard view', () => {
+    render(<Dashboard />);
+    expect(screen.getByText(/Select Homes & Retreats Utility Tool/i)).toBeInTheDocument();
+    expect(screen.getByText(/See below features/i)).toBeInTheDocument();
+  });
+
+  it('renders the ReportGenerator component when its card is clicked', () => {
+    render(<Dashboard />);
+    const card = screen.getByText(/Report Generator/i); // Replace with the actual card name
+    fireEvent.click(card);
+    expect(screen.getByTestId('ReportGenerator')).toBeInTheDocument();
+  });
+
+  it('renders the ActivateProperties component when its card is clicked', () => {
+    render(<Dashboard />);
+    const card = screen.getByText(/Activate Properties/i); // Replace with the actual card name
+    fireEvent.click(card);
+    expect(screen.getByTestId('ActivateProperties')).toBeInTheDocument();
+  });
+
+  it('renders the Reservations component when its card is clicked', () => {
+    render(<Dashboard />);
+    const card = screen.getByText(/Reservations/i); // Replace with the actual card name
+    fireEvent.click(card);
+    expect(screen.getByTestId('Reservations')).toBeInTheDocument();
+  });
+
+  it('navigates back to the dashboard view when the back button is clicked', () => {
+    render(<Dashboard />);
+    const card = screen.getByText(/Activate Properties/i); // Replace with the actual card name
+    fireEvent.click(card);
+    const backButton = screen.getByText(/Back/i); // Replace with the actual back button text
+    fireEvent.click(backButton);
+    expect(screen.getByText(/Select Homes & Retreats Utility Tool/i)).toBeInTheDocument();
+  });
+});
